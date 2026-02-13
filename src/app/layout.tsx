@@ -14,24 +14,24 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Shynar Bolatova | Portfolio",
-    template: "%s | Shynar Bolatova",
+    default: "Ruslan Sakhanov | Portfolio",
+    template: "%s | Ruslan Sakhanov",
   },
   description:
-    "Portfolio of Shynar Bolatova: selected projects, engineering experience and professional journey.",
+    "Portfolio of Ruslan Sakhanov: selected projects, engineering experience and professional journey.",
   metadataBase: new URL("https://rsakhv.com"),
   openGraph: {
-    title: "Shynar Bolatova | Portfolio",
+    title: "Ruslan Sakhanov | Portfolio",
     description:
       "Selected projects, engineering experience and professional journey.",
     url: "https://rsakhv.com",
-    siteName: "Shynar Bolatova Portfolio",
+    siteName: "Ruslan Sakhanov Portfolio",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Shynar Bolatova | Portfolio",
+    title: "Ruslan Sakhanov | Portfolio",
     description:
       "Selected projects, engineering experience and professional journey.",
   },
