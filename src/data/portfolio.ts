@@ -28,7 +28,7 @@ export const portfolio = {
   social: [
     {
       label: "GitHub",
-      href: "https://github.com/detraidhr-beep",
+      href: "https://github.com/rrsakhv",
     },
     {
       label: "LinkedIn",
