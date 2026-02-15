@@ -10,6 +10,7 @@ export type Experience = {
   company: string;
   period: string;
   highlights: string[];
+  href?: string;
 };
 
 export type SocialLink = {
@@ -34,6 +35,7 @@ export type ResumeExperienceItem = {
   period: string;
   role: string;
   bullets: string[];
+  href?: string;
 };
 
 export type ResumeEducationItem = {
@@ -102,7 +104,8 @@ export const portfolio = {
       {
         company: "ToTheMoon Crypto Exchange",
         period: "Feb 2025 - Dec 2025",
-        role: "QA Engineer (Contract)",
+        role: "QA Engineer",
+        href: "https://tothemoon.com",
         bullets: [
           "Led E2E test coverage for crypto exchange redesign handling $34M+ daily volume; validated trading engine, wallet, and payment features across web and mobile.",
           "Developed 25+ automated regression tests using Reflect AI, reducing manual effort and covering critical trading, wallet, and withdrawal workflows.",
@@ -114,6 +117,7 @@ export const portfolio = {
         company: "Solva LTD",
         period: "Dec 2023 - Jan 2025",
         role: "QA Engineer",
+        href: "https://solvaglobal.com/",
         bullets: [
           "Led QA for backend migration to Tier 2 banking infrastructure; designed API and integration test suites from scratch, ensuring regulatory compliance.",
           "Built performance testing capability: trained 5 engineers on Python/Locust and integrated load tests into CI/CD pipelines.",
@@ -125,6 +129,7 @@ export const portfolio = {
         company: "Halyk Bank of Kazakhstan JSC",
         period: "Aug 2023 - Dec 2023",
         role: "QA Engineer",
+        href: "https://halykbank.com/",
         bullets: [
           "Architected test automation framework (Appium/Java) for 10+ payment services serving 250K+ customers; integrated API/UI tests into CI/CD.",
           "Achieved 2x faster test development through modular design, shared libraries, and parallel execution.",
@@ -134,6 +139,7 @@ export const portfolio = {
         company: "Astana International Exchange",
         period: "May 2023 - Aug 2023",
         role: "QA Engineer (Contract)",
+        href: "https://aix.kz/",
         bullets: [
           "Executed E2E testing for IPO platform and Refinitiv World-Check KYC/AML system; validated REST API integrations, sanctions/PEP workflows, and regulatory compliance.",
           "Authored test cases and defect reports; coordinated with business analysts to define acceptance criteria and track issues through resolution.",
@@ -187,9 +193,10 @@ export const portfolio = {
   ] as Project[],
   experience: [
     {
-      role: "QA Engineer (Contract)",
+      role: "QA Engineer",
       company: "ToTheMoon",
       period: "Feb 2025 - Dec 2025",
+      href: "https://tothemoon.com",
       highlights: [
         "Led E2E testing for a crypto exchange redesign handling $34M+ daily volume.",
         "Built 25+ automated regression tests for trading, wallet, and withdrawal flows.",
@@ -200,6 +207,7 @@ export const portfolio = {
       role: "QA Engineer",
       company: "Solva LTD",
       period: "Dec 2023 - Jan 2025",
+      href: "https://solvaglobal.com/",
       highlights: [
         "Led QA for migration to Tier 2 banking infrastructure with API and integration test suites.",
         "Launched AI-based QA pilot that reduced QA effort by 20% and saved $15,000 in 3 months.",
@@ -210,7 +218,8 @@ export const portfolio = {
       role: "QA Engineer",
       company: "Halyk Bank of Kazakhstan JSC",
       period: "Aug 2023 - Dec 2023",
-      highlights: [
+      href: "https://halykbank.com/",
+      highlights: [ы
         "Designed test automation framework for 10+ payment services serving 250K+ customers.",
         "Integrated API and UI testing into CI/CD pipelines.",
       ],
@@ -219,6 +228,7 @@ export const portfolio = {
       role: "QA Engineer (Contract)",
       company: "Astana International Exchange",
       period: "May 2023 - Aug 2023",
+      href: "https://aix.kz/",
       highlights: [
         "Executed E2E QA for IPO platform and Refinitiv World-Check KYC/AML integration.",
         "Validated REST API workflows, sanctions/PEP checks, and compliance scenarios.",

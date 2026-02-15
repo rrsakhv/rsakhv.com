@@ -379,7 +379,7 @@ const heroCSS = `
   }
 
   .about-copy {
-    font-family: var(--font-geist-mono), "Courier New", monospace;
+    font-family: Helvetica, Arial, sans-serif;
     color: #111827;
   }
 
@@ -648,16 +648,16 @@ export default function Home() {
   const [firstName] = portfolio.name.split(" ");
   const currentRole = portfolio.experience[0];
   const previousRoles = portfolio.experience.slice(1);
-  const previousCompanies = Array.from(
-    new Set(previousRoles.map((item) => item.company)),
-  );
-  const previousCompaniesText =
-    previousCompanies.length > 0
-      ? new Intl.ListFormat("en", {
-          style: "long",
-          type: "conjunction",
-        }).format(previousCompanies)
-      : "";
+  const uniqueCompaniesMap = new Map<string, { name: string; href?: string }>();
+  previousRoles.forEach((role) => {
+    if (!uniqueCompaniesMap.has(role.company)) {
+      uniqueCompaniesMap.set(role.company, {
+        name: role.company,
+        href: role.href,
+      });
+    }
+  });
+  const previousCompanies = Array.from(uniqueCompaniesMap.values());
   const github = portfolio.social.find((link) => link.label === "GitHub");
   const linkedIn = portfolio.social.find((link) => link.label === "LinkedIn");
   const email = portfolio.social.find((link) => link.label === "Email");
@@ -726,7 +726,7 @@ export default function Home() {
             className="boot-shell"
           >
             <div className="terminal-head">
-              <span>legacy terminal // v0.94</span>
+              <span>super terminal // v2.0</span>
               <span className="terminal-leds" aria-hidden="true">
                 <span className="terminal-led" />
                 <span className="terminal-led" />
@@ -738,13 +738,13 @@ export default function Home() {
               <span className="boot-caret" aria-hidden="true" />
             </div>
             <div className="boot-row">
-              <span>awaiting user confirm</span>
+              <span>awaiting something...</span>
               <button
                 type="button"
                 className={`boot-action ${bootPhase === "ready" ? "is-visible" : ""}`}
                 onClick={handleBootLaunch}
               >
-                open Portfolio
+                click me
               </button>
             </div>
             <div className={`launch-sigil ${bootPhase === "launching" ? "is-active" : ""}`}>
@@ -756,7 +756,7 @@ export default function Home() {
         <section className={`hero ${bootPhase === "done" ? "is-active" : ""}`}>
           <div className="terminal-panel w-full max-w-4xl" style={{ animation: "terminalFlicker 3.4s linear infinite" }}>
             <div className="terminal-head">
-              <span>rsakhv.exe // boot sequence</span>
+              <span>rsakhv.dmg // boot sequence</span>
               <span className="terminal-leds" aria-hidden="true">
                 <span className="terminal-led" />
                 <span className="terminal-led" />
@@ -783,7 +783,7 @@ export default function Home() {
                 <h1 className="brand">
                   {letters.map((letter, idx) => (
                     <span
-                      key={`${letter}-${idx}`}
+                      key={`${letter} -${idx} `}
                       className="brand-cell"
                       style={{
                         transform: (() => {
@@ -836,25 +836,64 @@ export default function Home() {
               My name is <strong>{firstName}</strong>, and I&apos;m a{" "}
               <strong>{portfolio.role}</strong>.
             </p>
-
-            {currentRole ? (
-              <p className="section-fade section-fade-3 mt-8 text-2xl leading-snug">
-                I most recently worked at{" "}
-                <strong>{currentRole.company}</strong> as{" "}
-                <strong>{currentRole.role}</strong>.
-              </p>
-            ) : null}
-
-            {previousCompaniesText ? (
-              <p className="section-fade section-fade-4 muted mt-7 text-lg leading-relaxed">
-                Previously at{" "}
-                <span className="font-medium">{previousCompaniesText}</span>.
-              </p>
-            ) : null}
-
             <p className="section-fade section-fade-4 mt-7 text-xl leading-relaxed">
               I&apos;m currently open to new QA opportunities :)
             </p>
+            {currentRole ? (
+              <p className="section-fade section-fade-3 mt-8 text-2xl leading-snug">
+                I most recently worked at{" "}
+                {currentRole.href ? (
+                  <a
+                    href={currentRole.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-bold hover:underline"
+                  >
+                    {currentRole.company}
+                  </a>
+                ) : (
+                  <strong>{currentRole.company}</strong>
+                )}{" "}
+                as <strong>{currentRole.role}</strong>.
+              </p>
+            ) : null}
+
+            {previousCompanies.length > 0 ? (
+              <p className="section-fade section-fade-4 muted mt-7 text-lg leading-relaxed">
+                Previously at{" "}
+                <span className="font-medium">
+                  {new Intl.ListFormat("en", {
+                    style: "long",
+                    type: "conjunction",
+                  })
+                    .formatToParts(previousCompanies.map((c) => c.name))
+                    .map((part, index) => {
+                      if (part.type === "element") {
+                        const company = previousCompanies.find(
+                          (c) => c.name === part.value,
+                        );
+                        if (company?.href) {
+                          return (
+                            <a
+                              key={index}
+                              href={company.href}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="hover:underline"
+                            >
+                              {part.value}
+                            </a>
+                          );
+                        }
+                        return <span key={index}>{part.value}</span>;
+                      }
+                      return <span key={index}>{part.value}</span>;
+                    })}
+                </span>
+                .
+              </p>
+            ) : null}
+
 
             <div className="section-fade section-fade-5 mx-auto my-10 h-px w-56 bg-white/30" />
 
@@ -939,14 +978,26 @@ export default function Home() {
                   <h4>Professional Experience</h4>
                   <ul className="resume-job-list">
                     {portfolio.resumeFull.experience.map((job) => (
-                      <li key={`${job.company}-${job.period}`} className="resume-job">
+                      <li key={`${job.company} -${job.period} `} className="resume-job">
                         <p className="resume-job-head">
-                          {job.company} · {job.role}
+                          {job.href ? (
+                            <a
+                              href={job.href}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="hover:underline"
+                            >
+                              {job.company}
+                            </a>
+                          ) : (
+                            job.company
+                          )}{" "}
+                          · {job.role}
                         </p>
                         <p className="resume-job-meta">{job.period}</p>
                         <ul className="resume-job-bullets">
                           {job.bullets.map((bullet, idx) => (
-                            <li key={`${job.company}-bullet-${idx}`}>{bullet}</li>
+                            <li key={`${job.company} -bullet - ${idx} `}>{bullet}</li>
                           ))}
                         </ul>
                       </li>
@@ -958,7 +1009,7 @@ export default function Home() {
                   <h4>Education & Certifications</h4>
                   <ul className="resume-edu-list">
                     {portfolio.resumeFull.educationAndCertifications.map((item) => (
-                      <li key={`${item.title}-${item.period}`} className="resume-text">
+                      <li key={`${item.title} -${item.period} `} className="resume-text">
                         <strong>{item.title}</strong> - {item.period}
                       </li>
                     ))}
