@@ -15,7 +15,7 @@ const heroCSS = `
     place-items: start center;
     padding: 1.2rem;
     padding-top: clamp(2.2rem, 8vh, 5rem);
-    background: radial-gradient(circle at 50% 35%, rgba(210, 210, 210, 0.22), rgba(255, 255, 255, 0.98) 68%);
+    background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.98) 100%), rgba(255, 255, 255, 0.98) 100%);
     transition: opacity 420ms ease, visibility 420ms ease;
   }
 
