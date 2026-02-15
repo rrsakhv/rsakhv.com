@@ -219,7 +219,7 @@ export const portfolio = {
       company: "Halyk Bank of Kazakhstan JSC",
       period: "Aug 2023 - Dec 2023",
       href: "https://halykbank.com/",
-      highlights: [ы
+      highlights: [
         "Designed test automation framework for 10+ payment services serving 250K+ customers.",
         "Integrated API and UI testing into CI/CD pipelines.",
       ],
@@ -238,6 +238,7 @@ export const portfolio = {
       role: "QA Engineer",
       company: "InesSoft",
       period: "Aug 2022 - May 2023",
+      href: "https://play.google.com/store/apps/details?id=kz.gov.kgd.android&hl=en_US",
       highlights: [
         "Triaged 368+ bugs across mobile, CRM, and web platforms.",
         "Helped improve Google Play app rating from 3.2 to 4.1 through release-quality validation.",

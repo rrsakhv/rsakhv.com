@@ -1,12 +1,217 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { portfolio } from "@/data/portfolio";
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 
+/* ── Interactive Magnetic GlowLink ─────────────── */
+function GlowLink({
+  href,
+  children,
+  className = "",
+}: {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const [pos, setPos] = useState({ x: 50, y: 50 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Magnetic pull state
+  const magnetic = useRef({ targetX: 0, targetY: 0, currentX: 0, currentY: 0 });
+  const rafId = useRef<number>(0);
+
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  const animate = useCallback(() => {
+    const m = magnetic.current;
+    m.currentX = lerp(m.currentX, m.targetX, 0.15);
+    m.currentY = lerp(m.currentY, m.targetY, 0.15);
+
+    if (ref.current) {
+      ref.current.style.transform = `translate(${m.currentX}px, ${m.currentY}px)`;
+    }
+
+    if (
+      Math.abs(m.currentX - m.targetX) > 0.05 ||
+      Math.abs(m.currentY - m.targetY) > 0.05
+    ) {
+      rafId.current = requestAnimationFrame(animate);
+    }
+  }, []);
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      // Glow position
+      const px = ((e.clientX - rect.left) / rect.width) * 100;
+      const py = ((e.clientY - rect.top) / rect.height) * 100;
+      setPos({ x: px, y: py });
+
+      // Magnetic pull toward cursor (max ±10px)
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const MAX_PULL = 10;
+      magnetic.current.targetX = clamp((e.clientX - centerX) * 0.35, -MAX_PULL, MAX_PULL);
+      magnetic.current.targetY = clamp((e.clientY - centerY) * 0.5, -MAX_PULL, MAX_PULL);
+      cancelAnimationFrame(rafId.current);
+      rafId.current = requestAnimationFrame(animate);
+    },
+    [animate],
+  );
+
+  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+    magnetic.current.targetX = 0;
+    magnetic.current.targetY = 0;
+    cancelAnimationFrame(rafId.current);
+    rafId.current = requestAnimationFrame(animate);
+  }, [animate]);
+
+  useEffect(() => () => cancelAnimationFrame(rafId.current), []);
+
+  return (
+    <a
+      ref={ref}
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className={`glow-link ${className}`}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        // @ts-expect-error CSS custom properties
+        "--glow-x": `${pos.x}%`,
+        "--glow-y": `${pos.y}%`,
+        "--glow-opacity": isHovered ? 1 : 0,
+        willChange: "transform",
+      }}
+    >
+      <span className="glow-link-text">{children}</span>
+      <svg
+        className="glow-link-arrow"
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M3.5 8.5L8.5 3.5M8.5 3.5H4.5M8.5 3.5V7.5" />
+      </svg>
+      <span className="glow-link-shine" aria-hidden="true" />
+      <span className="glow-link-underline" aria-hidden="true" />
+    </a>
+  );
+}
+
 const heroCSS = `
+  /* ── GlowLink ─────────────────────────────────── */
+  .glow-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    color: inherit;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: color 0.3s ease;
+    overflow: hidden;
+  }
+
+  .glow-link-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .glow-link-arrow {
+    position: relative;
+    z-index: 1;
+    opacity: 0.5;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+  }
+
+  .glow-link:hover .glow-link-arrow {
+    opacity: 1;
+    transform: translate(1px, -1px);
+  }
+
+  .glow-link-shine {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle 80px at var(--glow-x, 50%) var(--glow-y, 50%),
+      rgba(255, 255, 255, 0.18) 0%,
+      transparent 70%
+    );
+    opacity: var(--glow-opacity, 0);
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  .glow-link:hover .glow-link-shine {
+    background: radial-gradient(
+      circle 80px at var(--glow-x, 50%) var(--glow-y, 50%),
+      rgba(255, 255, 255, 0.25) 0%,
+      transparent 70%
+    );
+  }
+
+  .glow-link-underline {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    bottom: 1px;
+    height: 2px;
+    z-index: 1;
+    background: currentColor;
+    border-radius: 1px;
+    opacity: 0.35;
+    transform: scaleX(0.3);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .glow-link:hover .glow-link-underline {
+    transform: scaleX(1);
+    opacity: 0.7;
+  }
+
+  .glow-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: rgba(255, 255, 255, 0.06);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .glow-link:hover::before {
+    opacity: 1;
+  }
+
   .boot-overlay {
     position: fixed;
     inset: 0;
@@ -15,7 +220,7 @@ const heroCSS = `
     place-items: start center;
     padding: 1.2rem;
     padding-top: clamp(2.2rem, 8vh, 5rem);
-    background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.98) 100%), rgba(255, 255, 255, 0.98) 100%);
+    background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.98) 100%, rgba(255, 255, 255, 0.98) 100%);
     transition: opacity 420ms ease, visibility 420ms ease;
   }
 
@@ -392,7 +597,7 @@ const heroCSS = `
     color: #111827;
   }
 
-  .about-copy .muted {
+  .about-copy.muted {
     color: rgba(55, 65, 81, 0.86);
   }
 
@@ -639,7 +844,7 @@ const heroCSS = `
 `;
 
 const letters = ["R", "S", "A", "K", "H", "V"];
-const bootCommand = "load Ruslan Sakhanov Portfolio";
+const bootCommand = "load Ruslan Sakhanov Portfolio ₍^. .^₎⟆";
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -721,7 +926,7 @@ export default function Home() {
     <>
       <style dangerouslySetInnerHTML={{ __html: heroCSS }} />
       <main className="terminal-main">
-        <div className={`boot-overlay ${bootPhase === "done" ? "is-hidden" : ""}`}>
+        <div className={`boot-overlay ${bootPhase === "done" ? "is-hidden" : ""} `}>
           <div
             className="boot-shell"
           >
@@ -741,19 +946,19 @@ export default function Home() {
               <span>awaiting something...</span>
               <button
                 type="button"
-                className={`boot-action ${bootPhase === "ready" ? "is-visible" : ""}`}
+                className={`boot-action ${bootPhase === "ready" ? "is-visible" : ""} `}
                 onClick={handleBootLaunch}
               >
                 click me
               </button>
             </div>
-            <div className={`launch-sigil ${bootPhase === "launching" ? "is-active" : ""}`}>
+            <div className={`launch-sigil ${bootPhase === "launching" ? "is-active" : ""} `}>
               <h2 className="launch-word">rsakhv_</h2>
             </div>
           </div>
         </div>
 
-        <section className={`hero ${bootPhase === "done" ? "is-active" : ""}`}>
+        <section className={`hero ${bootPhase === "done" ? "is-active" : ""} `}>
           <div className="terminal-panel w-full max-w-4xl" style={{ animation: "terminalFlicker 3.4s linear infinite" }}>
             <div className="terminal-head">
               <span>rsakhv.dmg // boot sequence</span>
@@ -783,7 +988,7 @@ export default function Home() {
                 <h1 className="brand">
                   {letters.map((letter, idx) => (
                     <span
-                      key={`${letter} -${idx} `}
+                      key={`${letter}-${idx}`}
                       className="brand-cell"
                       style={{
                         transform: (() => {
@@ -843,14 +1048,9 @@ export default function Home() {
               <p className="section-fade section-fade-3 mt-8 text-2xl leading-snug">
                 I most recently worked at{" "}
                 {currentRole.href ? (
-                  <a
-                    href={currentRole.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-bold hover:underline"
-                  >
+                  <GlowLink href={currentRole.href}>
                     {currentRole.company}
-                  </a>
+                  </GlowLink>
                 ) : (
                   <strong>{currentRole.company}</strong>
                 )}{" "}
@@ -874,15 +1074,12 @@ export default function Home() {
                         );
                         if (company?.href) {
                           return (
-                            <a
+                            <GlowLink
                               key={index}
                               href={company.href}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="hover:underline"
                             >
                               {part.value}
-                            </a>
+                            </GlowLink>
                           );
                         }
                         return <span key={index}>{part.value}</span>;
@@ -978,17 +1175,12 @@ export default function Home() {
                   <h4>Professional Experience</h4>
                   <ul className="resume-job-list">
                     {portfolio.resumeFull.experience.map((job) => (
-                      <li key={`${job.company} -${job.period} `} className="resume-job">
+                      <li key={`${job.company}-${job.period}`} className="resume-job">
                         <p className="resume-job-head">
                           {job.href ? (
-                            <a
-                              href={job.href}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="hover:underline"
-                            >
+                            <GlowLink href={job.href}>
                               {job.company}
-                            </a>
+                            </GlowLink>
                           ) : (
                             job.company
                           )}{" "}
@@ -997,7 +1189,7 @@ export default function Home() {
                         <p className="resume-job-meta">{job.period}</p>
                         <ul className="resume-job-bullets">
                           {job.bullets.map((bullet, idx) => (
-                            <li key={`${job.company} -bullet - ${idx} `}>{bullet}</li>
+                            <li key={`${job.company}-bullet-${idx}`}>{bullet}</li>
                           ))}
                         </ul>
                       </li>
@@ -1009,7 +1201,7 @@ export default function Home() {
                   <h4>Education & Certifications</h4>
                   <ul className="resume-edu-list">
                     {portfolio.resumeFull.educationAndCertifications.map((item) => (
-                      <li key={`${item.title} -${item.period} `} className="resume-text">
+                      <li key={`${item.title}-${item.period}`} className="resume-text">
                         <strong>{item.title}</strong> - {item.period}
                       </li>
                     ))}
