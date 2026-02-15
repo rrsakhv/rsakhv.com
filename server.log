@@ -552,3 +552,149 @@ Import traces:
  GET / 200 in 86ms (compile: 25ms, render: 61ms)
 ✓ Compiled in 307ms
  GET / 200 in 469ms (compile: 294ms, render: 175ms)
+✓ Compiled in 178ms
+✓ Compiled in 42ms
+ GET / 200 in 353ms (compile: 170ms, render: 182ms)
+ GET / 200 in 96ms (compile: 20ms, render: 76ms)
+ GET / 200 in 65ms (compile: 20ms, render: 45ms)
+✓ Compiled in 112ms
+ GET / 200 in 363ms (compile: 263ms, render: 100ms)
+ GET / 200 in 130ms (compile: 47ms, render: 83ms)
+✓ Compiled in 171ms
+✓ Compiled in 649ms
+✓ Compiled in 1361ms
+⨯ Error: supabaseUrl is required.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1410887066'
+}
+ GET / 500 in 1704ms (compile: 1261ms, render: 443ms)
+⨯ Error: supabaseUrl is required.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1410887066'
+}
+ GET / 500 in 251ms (compile: 2ms, render: 249ms)
+⨯ Error: supabaseUrl is required.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1410887066'
+}
+ GET / 500 in 313ms (compile: 24ms, render: 289ms)
+⨯ Error: supabaseUrl is required.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1410887066'
+}
+ GET / 500 in 566ms (compile: 113ms, render: 453ms)
+⨯ Error: supabaseUrl is required.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1410887066'
+}
+ GET / 500 in 178ms (compile: 6ms, render: 172ms)
+⨯ Error: supabaseUrl is required.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1410887066'
+}
+ GET / 500 in 484ms (compile: 156ms, render: 328ms)
+⨯ Error: supabaseUrl is required.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1410887066'
+}
+ GET / 500 in 269ms (compile: 21ms, render: 248ms)
+  Reload env: .env.local
+✓ Compiled in 833ms
+⨯ Error: Invalid supabaseUrl: Must be a valid HTTP or HTTPS URL.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1251627112'
+}
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⚠ Fast Refresh had to perform a full reload when ./src/lib/supabase.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET / 500 in 1457ms (compile: 890ms, render: 567ms)
+⨯ Error: Invalid supabaseUrl: Must be a valid HTTP or HTTPS URL.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1251627112'
+}
+ GET / 500 in 209ms (compile: 5ms, render: 204ms)
+⨯ Error: Invalid supabaseUrl: Must be a valid HTTP or HTTPS URL.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1251627112'
+}
+ GET / 500 in 438ms (compile: 162ms, render: 275ms)
+⨯ Error: Invalid supabaseUrl: Must be a valid HTTP or HTTPS URL.
+    at module evaluation (src/lib/supabase.ts:7:37)
+    at module evaluation (src/app/page.tsx:5:1)
+  5 | const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  6 |
+> 7 | export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    |                                     ^
+  8 | {
+  digest: '1251627112'
+}
+ GET / 500 in 182ms (compile: 8ms, render: 173ms)
+  Reload env: .env.local
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⚠ Fast Refresh had to perform a full reload when ./src/lib/supabase.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+✓ Compiled in 640ms
+ GET / 200 in 299ms (compile: 145ms, render: 153ms)
+ GET / 200 in 250ms (compile: 171ms, render: 79ms)
+ GET / 200 in 236ms (compile: 81ms, render: 155ms)
+ GET / 200 in 298ms (compile: 26ms, render: 272ms)

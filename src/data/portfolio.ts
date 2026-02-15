@@ -67,9 +67,9 @@ export const portfolio = {
   ] as SocialLink[],
   resume: {
     label: "Ruslan Sakhanov Resume",
-    href: "/resume/current.pdf",
+    href: "resume.pdf",
     updatedAt: "2026-02",
-    isPublished: false,
+    isPublished: true,
   } as ResumeAsset,
   resumeFull: {
     contact:
@@ -149,6 +149,7 @@ export const portfolio = {
         company: "InesSoft",
         period: "Aug 2022 - May 2023",
         role: "QA Engineer",
+        href: "https://iserv.kz/en",
         bullets: [
           "Triaged 368+ bugs across 3 platforms (mobile, CRM, web) in Agile sprints; drove release validation, raising Google Play rating from 3.2 to 4.1.",
           "Maintained regression test suites across iOS, Android, and web; collaborated with developers to prioritize and resolve defects within sprint cycles.",
@@ -238,7 +239,7 @@ export const portfolio = {
       role: "QA Engineer",
       company: "InesSoft",
       period: "Aug 2022 - May 2023",
-      href: "https://play.google.com/store/apps/details?id=kz.gov.kgd.android&hl=en_US",
+      href: "https://iserv.kz/en",
       highlights: [
         "Triaged 368+ bugs across mobile, CRM, and web platforms.",
         "Helped improve Google Play app rating from 3.2 to 4.1 through release-quality validation.",

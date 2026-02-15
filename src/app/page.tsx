@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import { portfolio } from "@/data/portfolio";
+import { supabase } from "@/lib/supabase";
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
@@ -220,7 +221,7 @@ const heroCSS = `
     place-items: start center;
     padding: 1.2rem;
     padding-top: clamp(2.2rem, 8vh, 5rem);
-    background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.98) 100%, rgba(255, 255, 255, 0.98) 100%);
+    background: #ffffff;
     transition: opacity 420ms ease, visibility 420ms ease;
   }
 
@@ -388,7 +389,7 @@ const heroCSS = `
     inset: 0;
     pointer-events: none;
     z-index: 41;
-    background: radial-gradient(circle at 50% 50%, transparent 58%, rgba(0, 0, 0, 0.42) 100%);
+    background: none;
   }
 
   .terminal-panel {
@@ -433,7 +434,7 @@ const heroCSS = `
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 20%, rgba(220, 220, 220, 0.28), rgba(255, 255, 255, 0.96) 62%);
+    background: #ffffff;
   }
 
   .hero-inner {
@@ -1098,14 +1099,9 @@ export default function Home() {
               <p>
                 Check out what I&apos;m up to on{" "}
                 {github ? (
-                  <a
-                    href={github.href}
-                    className="font-medium"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <GlowLink href={github.href}>
                     GitHub
-                  </a>
+                  </GlowLink>
                 ) : (
                   "GitHub"
                 )}
@@ -1117,26 +1113,18 @@ export default function Home() {
                 {linkedIn ? (
                   <>
                     Connect with me on{" "}
-                    <a
-                      href={linkedIn.href}
-                      className="font-medium"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <GlowLink href={linkedIn.href}>
                       LinkedIn
-                    </a>
+                    </GlowLink>
                     <br />
                   </>
                 ) : null}
                 {email ? (
                   <>
                     Email me at{" "}
-                    <a
-                      href={email.href}
-                      className="font-medium"
-                    >
+                    <GlowLink href={email.href}>
                       {email.href.replace("mailto:", "")}
-                    </a>
+                    </GlowLink>
                   </>
                 ) : null}
               </p>
@@ -1147,6 +1135,36 @@ export default function Home() {
               <p className="resume-meta">
                 {portfolio.resume.label} · updated {portfolio.resume.updatedAt}
               </p>
+              <div className="mt-4 mb-6">
+                <button
+                  type="button"
+                  className="resume-btn"
+                  onClick={async () => {
+                    const { data } = supabase.storage
+                      .from("portfolio")
+                      .getPublicUrl(portfolio.resume.href);
+                    if (data?.publicUrl) {
+                      window.open(data.publicUrl, "_blank");
+                    }
+                  }}
+                >
+                  Download Resume
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
+                </button>
+              </div>
 
               <div className="resume-full">
                 <div className="resume-section">
