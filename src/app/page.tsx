@@ -253,6 +253,7 @@ const heroCSS = `
     font-size: clamp(0.86rem, 2vw, 1rem);
     letter-spacing: 0.05em;
     background: rgba(255, 255, 255, 0.8);
+    white-space: pre-wrap;
   }
 
   .boot-caret {
@@ -845,7 +846,7 @@ const heroCSS = `
 `;
 
 const letters = ["R", "S", "A", "K", "H", "V"];
-const bootCommand = "load Ruslan Sakhanov Portfolio ₍^. .^₎⟆";
+const bootCommand = "load Ruslan Sakhanov Portfolio \n₍^. .^₎⟆";
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
