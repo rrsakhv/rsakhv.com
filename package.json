@@ -19,7 +19,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "npx playwright test",
+    "test:prod": "BASE_URL=https://rsakhv.vercel.app npx playwright test"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",
@@ -28,6 +30,7 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
