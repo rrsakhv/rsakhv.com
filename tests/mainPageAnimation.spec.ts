@@ -27,6 +27,21 @@ test('brand letters should be visible after animation', async ({ page }) => {
     await expect(letters).toHaveCount(6); // r-s-a-k-h-v
 });
 
+test('scroll to about me section', async ({ page }) => {
+    await page.getByRole('button', { name: 'click me' }).click();
+    await expect(page.locator('.hero.is-active')).toBeVisible();
+    await page.locator('.scroll-cta').click();
+    await expect(page.locator('#about')).toBeVisible();
+})
 
+test('validate about me section', async ({ page }) => {
+    await page.getByRole('button', { name: 'click me' }).click();
+    await expect(page.locator('.hero.is-active')).toBeVisible();
+    await page.locator('.scroll-cta').click();
+    await expect(page.locator('#about')).toBeVisible();
+    await expect(page.locator('.about-title')).toBeVisible();
+    await expect(page.locator('.about-description')).toBeVisible();
+    await expect(page.locator('.about-image')).toBeVisible();
+})
 
 
