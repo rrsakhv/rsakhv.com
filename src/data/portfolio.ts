@@ -11,6 +11,8 @@ export type Experience = {
   period: string;
   highlights: string[];
   href?: string;
+  logo?: string;
+  description?: string;
 };
 
 export type SocialLink = {
@@ -41,6 +43,7 @@ export type ResumeExperienceItem = {
 export type ResumeEducationItem = {
   title: string;
   period: string;
+  logo?: string;
 };
 
 export const portfolio = {
@@ -162,14 +165,17 @@ export const portfolio = {
         title:
           "Karaganda State Technical University - BE in Mathematical and Computer Modeling, GPA: 3.5/4",
         period: "June 2022",
+        logo: "/logos/kstu.png",
       },
       {
         title: "DevOps Foundations - CompTIA",
         period: "Sep 2025",
+        logo: "/logos/comptia.png",
       },
       {
         title: "iOS and Swift - Certificate of Completion, The Tech Orda Program",
         period: "Jun 2024",
+        logo: "/logos/techorda.png",
       },
     ] as ResumeEducationItem[],
   },
@@ -198,6 +204,8 @@ export const portfolio = {
       company: "ToTheMoon",
       period: "Feb 2025 - Dec 2025",
       href: "https://tothemoon.com",
+      logo: "/logos/tothemoon.png",
+      description: "Crypto exchange platform handling $34M+ daily trading volume.",
       highlights: [
         "Led E2E testing for a crypto exchange redesign handling $34M+ daily volume.",
         "Built 25+ automated regression tests for trading, wallet, and withdrawal flows.",
@@ -209,6 +217,8 @@ export const portfolio = {
       company: "Solva LTD",
       period: "Dec 2023 - Jan 2025",
       href: "https://solvaglobal.com/",
+      logo: "/logos/solva.png",
+      description: "Fintech company with Tier 2 banking infrastructure & AI-powered QA.",
       highlights: [
         "Led QA for migration to Tier 2 banking infrastructure with API and integration test suites.",
         "Launched AI-based QA pilot that reduced QA effort by 20% and saved $15,000 in 3 months.",
@@ -220,6 +230,8 @@ export const portfolio = {
       company: "Halyk Bank of Kazakhstan JSC",
       period: "Aug 2023 - Dec 2023",
       href: "https://halykbank.com/",
+      logo: "/logos/halykbank.png",
+      description: "Kazakhstan's largest bank — 250K+ customers, 10+ payment services.",
       highlights: [
         "Designed test automation framework for 10+ payment services serving 250K+ customers.",
         "Integrated API and UI testing into CI/CD pipelines.",
@@ -230,6 +242,8 @@ export const portfolio = {
       company: "Astana International Exchange",
       period: "May 2023 - Aug 2023",
       href: "https://aix.kz/",
+      logo: "/logos/aix.png",
+      description: "Central Asian stock exchange — IPO platform & KYC/AML compliance.",
       highlights: [
         "Executed E2E QA for IPO platform and Refinitiv World-Check KYC/AML integration.",
         "Validated REST API workflows, sanctions/PEP checks, and compliance scenarios.",
@@ -240,6 +254,8 @@ export const portfolio = {
       company: "InesSoft",
       period: "Aug 2022 - May 2023",
       href: "https://iserv.kz/en",
+      logo: "/logos/inessoft.png",
+      description: "Software company — mobile, CRM & web platform QA across 3+ products.",
       highlights: [
         "Triaged 368+ bugs across mobile, CRM, and web platforms.",
         "Helped improve Google Play app rating from 3.2 to 4.1 through release-quality validation.",
