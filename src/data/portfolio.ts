@@ -46,6 +46,20 @@ export type ResumeEducationItem = {
   logo?: string;
 };
 
+export type CertificationItem = {
+  title: string;
+  issuer: string;
+  date: string;
+  image: string;
+};
+
+export type RecommendationItem = {
+  name: string;
+  role: string;
+  text: string;
+  href?: string;
+};
+
 export const portfolio = {
   name: "Ruslan Sakhanov",
   role: "QA Engineer",
@@ -160,24 +174,69 @@ export const portfolio = {
         ],
       },
     ] as ResumeExperienceItem[],
-    educationAndCertifications: [
+    education: [
       {
-        title:
-          "Karaganda State Technical University - BE in Mathematical and Computer Modeling, GPA: 3.5/4",
-        period: "June 2022",
+        title: "Tech Orda – iOS & Swift",
+        period: "2023 - 2024",
+        logo: "/logos/techorda.png",
+      },
+      {
+        title: "Karaganda State Technical University - BE in Mathematical and Computer Modeling",
+        period: "2018 - 2022",
         logo: "/logos/kstu.png",
       },
       {
-        title: "DevOps Foundations - CompTIA",
-        period: "Sep 2025",
+        title: "CompTIA Security+",
+        period: "2024",
         logo: "/logos/comptia.png",
       },
+    ],
+    certifications: [
       {
-        title: "iOS and Swift - Certificate of Completion, The Tech Orda Program",
-        period: "Jun 2024",
-        logo: "/logos/techorda.png",
+        title: "Tech Orda Program Completion",
+        issuer: "Astana Hub / Alabs Academy",
+        date: "17.06.2024",
+        image: "/certificates/techorda.jpg",
       },
-    ] as ResumeEducationItem[],
+      {
+        title: "DevOps Foundations",
+        issuer: "LinkedIn Learning",
+        date: "Sep 30, 2025",
+        image: "/certificates/linkedin_devops.jpg",
+      },
+    ],
+    recommendations: [
+      {
+        name: "Anelya Tleulina, MSc",
+        role: "Project Manager, Digital Communications & PR @ AIX",
+        text: "I had the pleasure of working with Ruslan at Astana International Exchange (AIX), where he proved himself as an outstanding QA Engineer. Ruslan consistently demonstrated strong technical expertise, a detail-oriented mindset, and a proactive approach to ensuring product quality. His ability to design comprehensive test cases, detect issues early, and collaborate effectively with developers and product managers significantly improved the reliability and performance of our systems. Beyond his technical skills, Ruslan was a great team player — approachable, supportive, and always willing to share knowledge. His professionalism and positive attitude made working with him a rewarding experience.",
+        href: "https://www.linkedin.com/in/anelyatl/"
+      },
+      {
+        name: "Igor Strelchenya",
+        role: "Backend Software Engineer @ FinTech",
+        text: "I had the chance to work with Ruslan Sakhanov on fintech projects and what stood out to me is his ability to spot not just bugs but also potential risks for the product. He pays close attention to details, asks the right questions, and helps the team find solutions that genuinely improve quality. Working with Ruslan is always a positive experience — he is reliable, professional, and easy to collaborate with.",
+        href: "https://www.linkedin.com/in/igor-strelchenya/"
+      },
+      {
+        name: "Anel Shokimova",
+        role: "QA Engineer",
+        text: "I had the experience of working with Ruslan, and I can highlight him as a truly strong specialist. He is a full-stack tester: he works confidently with both manual testing and automation, knows how to write autotests and build the testing process. He always strives to learn new things and expand his skills, which makes him a versatile and valuable team member. It is easy and pleasant to work with him — a responsible, attentive, and professional colleague.",
+        href: "https://www.linkedin.com/in/anel-shokimova-57a077237/"
+      },
+      {
+        name: "Timur Zhumadilov",
+        role: "Java Developer @ AIX",
+        text: "Ruslan is the kind of QA Engineer who makes the whole team better. He's thorough in testing, quick to share insights, and great at keeping communication clear and easy. On top of that, he's just a genuinely good teammate to work with.",
+        href: "https://www.linkedin.com/in/timur-zhumadilov-185a61229/"
+      },
+      {
+        name: "Alexandr Osipov",
+        role: "QA Engineer @ Solva",
+        text: "I was glad to work together with Ruslan at Solva. He brought innovations to our team in load testing and the application of AI in analyzing specification requirements and creating test documentation. I highly recommend Ruslan to any team looking for a team player with a high level of technical training.",
+        href: "https://www.linkedin.com/in/alexandr-osipov-qa2022/"
+      }
+    ]
   },
   projects: [
     {

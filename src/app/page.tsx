@@ -40,15 +40,15 @@ const swissCSS = `
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 4rem 0;
+    padding: 6rem 0;
     position: relative;
   }
 
   .hero-name {
     font-size: clamp(3.5rem, 12vw, 10rem);
     font-weight: 700;
-    line-height: 0.9;
-    letter-spacing: -0.03em;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
     text-transform: uppercase;
     margin: 0;
     opacity: 0;
@@ -56,21 +56,33 @@ const swissCSS = `
     animation: swissFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
   }
 
+  .hero-name-first {
+    font-weight: 200;
+    display: block;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-name-last {
+    font-weight: 800;
+    display: block;
+  }
+
   .hero-role {
-    font-size: clamp(1.2rem, 3vw, 2.4rem);
-    font-weight: 300;
-    letter-spacing: 0.02em;
-    margin: 0.8rem 0 0;
-    color: #999;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin: 1.5rem 0 0;
+    color: #fff;
     opacity: 0;
     transform: translateY(20px);
     animation: swissFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
   }
 
   .hero-divider {
-    width: 60px;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.25);
+    width: 80px;
+    height: 2px;
+    background: #fff;
     margin: 2.5rem 0;
     opacity: 0;
     animation: swissFadeUp 0.6s ease 0.5s forwards;
@@ -79,18 +91,43 @@ const swissCSS = `
   .hero-meta {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    font-size: 0.88rem;
-    color: #666;
-    letter-spacing: 0.03em;
+    gap: 1.25rem;
     opacity: 0;
     transform: translateY(15px);
     animation: swissFadeUp 0.7s ease 0.6s forwards;
   }
 
-  .hero-meta strong {
-    color: #fff;
+  .hero-meta-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #777;
     font-weight: 500;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+
+  .hero-meta-value {
+    font-size: 1.1rem;
+    color: #eee;
+    line-height: 1.65;
+    font-weight: 300;
+    max-width: 600px;
+  }
+
+  .hero-meta-value strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .hero-meta-row {
+    display: flex;
+    gap: 3rem;
+  }
+
+  .hero-meta-block {
+    display: flex;
+    flex-direction: column;
   }
 
   .hero-links {
@@ -103,11 +140,11 @@ const swissCSS = `
   }
 
   .hero-link {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     font-weight: 500;
-    color: #999;
+    color: #bbb;
     transition: color 0.2s ease;
     display: inline-flex;
     align-items: center;
@@ -119,48 +156,205 @@ const swissCSS = `
     opacity: 1;
   }
 
-  .hero-scroll {
+  /* ── Scroll Indicator ──────────────────────── */
+
+  .hero-scroll-indicator {
     position: absolute;
-    bottom: 2.5rem;
+    bottom: 3rem;
     left: 2rem;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: #444;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
     opacity: 0;
     animation: swissFadeUp 0.6s ease 1s forwards;
+  }
+
+  .hero-scroll-indicator span {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #555;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .hero-scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, #fff 0%, transparent 100%);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* ── Swiss Red Accent ──────────────────────── */
+
+  .status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+    margin-right: 8px;
+    animation: statusPulse 2.5s ease-in-out infinite;
+    vertical-align: middle;
+  }
+
+  .exp-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .exp-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(255, 255, 255, 0); }
+  }
+
+  /* ── Year Watermark ────────────────────────── */
+
+  .hero-year {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(8rem, 20vw, 18rem);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.02);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── Skills Ticker ─────────────────────────── */
+
+  .swiss-ticker {
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .swiss-ticker::before,
+  .swiss-ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .swiss-ticker::before {
+    left: 0;
+    background: linear-gradient(to right, #000, transparent);
+  }
+
+  .swiss-ticker::after {
+    right: 0;
+    background: linear-gradient(to left, #000, transparent);
+  }
+
+  .ticker-track {
+    display: flex;
+    gap: 3rem;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+
+  .ticker-item {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #555;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .ticker-dot {
+    color: #fff;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── Enhanced Card Accents ─────────────────── */
+
+  .exp-card.is-open {
+    background: rgba(255, 255, 255, 0.035);
+    border-left-color: #fff;
   }
 
   /* ── Section ────────────────────────────────── */
 
   .swiss-section {
-    padding: 6rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 7rem 0;
+    border-top: 2px solid rgba(255, 255, 255, 0.12);
   }
 
   .swiss-section-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  .swiss-section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1.5rem;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: #fff;
   }
 
   .swiss-section-title {
-    font-size: clamp(2rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 6vw, 5rem);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     line-height: 1;
     margin: 0;
   }
 
-  .swiss-section-count {
+  .swiss-section-number {
+    font-family: var(--font-geist-mono), monospace;
     font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.12em;
     color: #555;
+    position: absolute;
+    top: 0.5rem;
+    right: 0;
+  }
+
+  .swiss-section-count {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #666;
     font-family: var(--font-geist-mono), monospace;
   }
 
@@ -189,7 +383,7 @@ const swissCSS = `
 
   .exp-card:hover {
     background: rgba(255, 255, 255, 0.025);
-    border-left-color: rgba(255, 255, 255, 0.3);
+    border-left-color: rgba(255, 255, 255, 0.5);
   }
 
   .exp-card.is-open {
@@ -263,25 +457,26 @@ const swissCSS = `
 
   .exp-card-period {
     font-family: var(--font-geist-mono), monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    color: #555;
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    color: #888;
     text-transform: uppercase;
     white-space: nowrap;
   }
 
   .exp-card-role {
-    margin: 0.25rem 0 0;
-    font-size: 0.92rem;
-    color: #999;
+    margin: 0.3rem 0 0;
+    font-size: 1rem;
+    color: #ccc;
     font-weight: 400;
+    letter-spacing: 0.01em;
   }
 
   .exp-card-desc {
     margin: 0.5rem 0 0;
-    font-size: 0.88rem;
-    line-height: 1.5;
-    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #999;
   }
 
   .exp-card-chevron {
@@ -316,14 +511,14 @@ const swissCSS = `
     margin: 0;
     padding: 0 0 0 1.25rem;
     display: grid;
-    gap: 0.45rem;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: #bbb;
+    gap: 0.5rem;
+    font-size: 0.94rem;
+    line-height: 1.65;
+    color: #ccc;
   }
 
   .exp-card-highlights li::marker {
-    color: #555;
+    color: #666;
   }
 
   .exp-card-link {
@@ -336,10 +531,10 @@ const swissCSS = `
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
-    color: #888;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #999;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 4px;
-    padding: 0.4rem 0.75rem;
+    padding: 0.45rem 0.8rem;
     transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   }
 
@@ -361,19 +556,19 @@ const swissCSS = `
   .resume-col h4 {
     font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: #555;
-    margin: 0 0 1.25rem;
+    letter-spacing: 0.22em;
+    color: #888;
+    margin: 0 0 1.5rem;
     font-weight: 500;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
   }
 
   .resume-col p,
   .resume-col li {
-    font-size: 0.92rem;
-    line-height: 1.6;
-    color: #aaa;
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #ddd;
     margin: 0;
   }
 
@@ -386,8 +581,8 @@ const swissCSS = `
   }
 
   .resume-col li strong {
-    color: #ddd;
-    font-weight: 500;
+    color: #fff;
+    font-weight: 600;
   }
 
   .resume-download {
@@ -456,9 +651,69 @@ const swissCSS = `
   }
 
   .edu-logo {
-    width: 40px;
-    height: 40px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+  }
+
+  /* ── Certifications & Recommendations ────────── */
+
+  .cert-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-top: 1rem;
+  }
+
+  .cert-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .cert-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .cert-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .rec-card {
+    border-left: 2px solid #fff;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    margin-bottom: 2rem;
+  }
+
+  .rec-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ddd;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .rec-author {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #fff;
+  }
+
+  .rec-role {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 0.25rem;
   }
 
   .edu-logo-placeholder {
@@ -473,38 +728,38 @@ const swissCSS = `
   }
 
   .edu-title {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     font-weight: 600;
-    color: #ddd;
-    line-height: 1.35;
+    color: #eee;
+    line-height: 1.4;
     margin: 0;
   }
 
   .edu-period {
     font-family: var(--font-geist-mono), monospace;
-    font-size: 0.7rem;
+    font-size: 0.74rem;
     letter-spacing: 0.08em;
-    color: #555;
+    color: #777;
     text-transform: uppercase;
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
   }
 
   /* ── Footer ─────────────────────────────────── */
 
   .swiss-footer {
-    padding: 3rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 4rem 0;
+    border-top: 2px solid rgba(255, 255, 255, 0.12);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: #444;
+    letter-spacing: 0.16em;
+    color: #777;
   }
 
   .swiss-footer a {
-    color: #666;
+    color: #999;
   }
 
   .swiss-footer a:hover {
@@ -541,7 +796,11 @@ const swissCSS = `
       padding: 3rem 0;
     }
 
-    .hero-scroll {
+    .hero-scroll-indicator {
+      display: none;
+    }
+
+    .hero-year {
       display: none;
     }
 
@@ -572,7 +831,7 @@ const swissCSS = `
 
   @media (prefers-reduced-motion: reduce) {
     .hero-name, .hero-role, .hero-divider,
-    .hero-meta, .hero-links, .hero-scroll {
+    .hero-meta, .hero-links, .hero-scroll-indicator {
       opacity: 1 !important;
       transform: none !important;
       animation: none !important;
@@ -599,18 +858,30 @@ export default function Home() {
           {/* ── Hero ──────────────────────────── */}
           <section className="hero">
             <h1 className="hero-name">
-              Ruslan<br />
-              Sakhanov
+              <span className="hero-name-first">Ruslan</span>
+              <span className="hero-name-last">Sakhanov</span>
             </h1>
             <p className="hero-role">{portfolio.role}</p>
 
             <div className="hero-divider" />
 
             <div className="hero-meta">
-              <span>{portfolio.location} · <strong>Open to opportunities</strong></span>
-              <span style={{ color: "#555", fontSize: "0.82rem" }}>
-                {portfolio.intro}
-              </span>
+              <div className="hero-meta-row">
+                <div className="hero-meta-block">
+                  <span className="hero-meta-label">Location</span>
+                  <span className="hero-meta-value">{portfolio.location}</span>
+                </div>
+                <div className="hero-meta-block">
+                  <span className="hero-meta-label">Status</span>
+                  <span className="hero-meta-value"><span className="status-dot" /><strong>Open to opportunities</strong></span>
+                </div>
+              </div>
+              <div className="hero-meta-block">
+                <span className="hero-meta-label">About</span>
+                <span className="hero-meta-value">
+                  {portfolio.intro}
+                </span>
+              </div>
             </div>
 
             <div className="hero-links">
@@ -631,13 +902,19 @@ export default function Home() {
               )}
             </div>
 
-            <span className="hero-scroll" aria-hidden="true">Scroll</span>
+            <div className="hero-scroll-indicator" aria-hidden="true">
+              <span>↓</span>
+              <div className="hero-scroll-line" />
+            </div>
+
+            <span className="hero-year" aria-hidden="true">2025</span>
           </section>
 
           {/* ── Experience ────────────────────── */}
           <section className="swiss-section" id="experience">
             <div className="swiss-section-header">
               <h2 className="swiss-section-title">Experience</h2>
+              <span className="swiss-section-number">01/</span>
               <span className="swiss-section-count">
                 {portfolio.experience.length} roles
               </span>
@@ -649,10 +926,26 @@ export default function Home() {
             </div>
           </section>
 
+          {/* ── Skills Ticker ──────────────────── */}
+          <div className="swiss-ticker">
+            <div className="ticker-track">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} style={{ display: 'flex', gap: '3rem' }}>
+                  {['Playwright', 'Selenium', 'Cypress', 'Postman', 'Jira', 'Python', 'TypeScript', 'SQL', 'REST API', 'CI/CD', 'Git', 'Agile', 'Scrum'].map((skill) => (
+                    <span className="ticker-item" key={`${skill}-${i}`}>
+                      <span className="ticker-dot">● </span>{skill}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* ── Resume ────────────────────────── */}
           <section className="swiss-section" id="resume">
             <div className="swiss-section-header">
               <h2 className="swiss-section-title">Resume</h2>
+              <span className="swiss-section-number">02/</span>
             </div>
 
             <div style={{ marginBottom: "2.5rem" }}>
@@ -699,9 +992,9 @@ export default function Home() {
               </div>
 
               <div className="resume-col">
-                <h4>Education & Certifications</h4>
+                <h4>Education</h4>
                 <div className="edu-grid">
-                  {portfolio.resumeFull.educationAndCertifications.map((item) => (
+                  {portfolio.resumeFull.education.map((item) => (
                     <div className="edu-card" key={`${item.title}-${item.period}`}>
                       <div className="edu-logo-wrap">
                         {item.logo ? (
@@ -725,7 +1018,48 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
+
+                <h4 style={{ marginTop: '3rem' }}>Certifications</h4>
+                <div className="cert-grid">
+                  {portfolio.resumeFull.certifications.map((cert) => (
+                    <div className="cert-card" key={cert.title}>
+                      <img src={cert.image} alt={cert.title} className="cert-image" />
+                      <div>
+                        <p className="edu-title">{cert.title}</p>
+                        <p className="edu-period">{cert.issuer} • {cert.date}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
+            </div>
+          </section>
+
+          {/* ── Recommendations ────────────────────── */}
+          <section className="swiss-section" id="recommendations">
+            <div className="swiss-section-header">
+              <h2 className="swiss-section-title">Recommendations</h2>
+              <span className="swiss-section-number">03/</span>
+            </div>
+
+            <div className="recommendations-grid">
+              {portfolio.resumeFull.recommendations.map((rec, i) => (
+                <div className="rec-card" key={i}>
+                  <p className="rec-text">"{rec.text}"</p>
+                  <div>
+                    <div className="rec-author">
+                      {rec.href ? (
+                        <a href={rec.href} target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>
+                          {rec.name} ↗
+                        </a>
+                      ) : (
+                        rec.name
+                      )}
+                    </div>
+                    <div className="rec-role">{rec.role}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 
