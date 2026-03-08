@@ -30,8 +30,68 @@ const swissCSS = `
   .swiss-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 4rem;
+    position: relative;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
   }
+
+  /* ── Creative Swiss Elements ────────────────── */
+  
+  .swiss-vertical-text {
+    position: absolute;
+    left: -1px;
+    top: 6rem;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #444;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .swiss-grid-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    animation: drawGridX 2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+  }
+
+  .swiss-vertical-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 0;
+    transform-origin: top;
+    transform: scaleY(0);
+    animation: drawGridY 2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+  }
+
+  .swiss-coord {
+    position: absolute;
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.6rem;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+    user-select: none;
+    z-index: 10;
+  }
+  .coord-1 { top: 2rem; left: 4.5rem; }
+  .coord-2 { bottom: 2rem; right: 4.5rem; }
 
   /* ── Hero ────────────────────────────────────── */
 
@@ -44,6 +104,12 @@ const swissCSS = `
     position: relative;
   }
 
+  .hero-name-wrap {
+    overflow: hidden;
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
+  }
+
   .hero-name {
     font-size: clamp(3.5rem, 12vw, 10rem);
     font-weight: 700;
@@ -51,9 +117,10 @@ const swissCSS = `
     letter-spacing: -0.04em;
     text-transform: uppercase;
     margin: 0;
+    transform: translateY(120%) skewY(5deg);
+    clip-path: polygon(0 0, 100% 0, 100% 0%, 0% 0%);
     opacity: 0;
-    transform: translateY(30px);
-    animation: swissFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    animation: revealText 1.4s cubic-bezier(0.85, 0, 0.15, 1) 0.15s forwards;
   }
 
   .hero-name-first {
@@ -77,6 +144,20 @@ const swissCSS = `
     opacity: 0;
     transform: translateY(20px);
     animation: swissFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .hero-role-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .hero-role-line { display: block; }
   }
 
   .hero-divider {
@@ -91,20 +172,36 @@ const swissCSS = `
   .hero-meta {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 2rem;
     opacity: 0;
     transform: translateY(15px);
-    animation: swissFadeUp 0.7s ease 0.6s forwards;
+    animation: swissFadeUp 1.2s cubic-bezier(0.85, 0, 0.15, 1) 0.6s forwards;
+    margin-top: 1rem;
   }
 
-  .hero-meta-label {
-    font-size: 0.68rem;
+  .hero-about-big {
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    color: #ccc;
+    max-width: 800px;
+  }
+
+  .hero-meta-minimal {
+    display: flex;
+    gap: 3rem;
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #777;
-    font-weight: 500;
-    margin-bottom: 0.3rem;
-    display: block;
+    letter-spacing: 0.15em;
+    color: #888;
+  }
+
+  .hero-meta-minimal span {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
   }
 
   .hero-meta-value {
@@ -136,7 +233,7 @@ const swissCSS = `
     margin-top: 2rem;
     opacity: 0;
     transform: translateY(15px);
-    animation: swissFadeUp 0.7s ease 0.75s forwards;
+    animation: swissFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
   }
 
   .hero-link {
@@ -206,20 +303,37 @@ const swissCSS = `
     50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(255, 255, 255, 0); }
   }
 
+  /* ── Premium Animations ──────────────────────── */
+
+  @keyframes drawGridX {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+  }
+
+  @keyframes drawGridY {
+    0% { transform: scaleY(0); }
+    100% { transform: scaleY(1); }
+  }
+
+  @keyframes revealText {
+    0% { transform: translateY(120%) skewY(6deg); clip-path: polygon(0 0, 100% 0, 100% 0%, 0% 0%); opacity: 0; }
+    100% { transform: translateY(0) skewY(0deg); clip-path: polygon(0 -20%, 100% -20%, 100% 120%, 0% 120%); opacity: 1; }
+  }
+
   /* ── Year Watermark ────────────────────────── */
 
   .hero-year {
     position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: clamp(8rem, 20vw, 18rem);
+    right: -2rem;
+    bottom: -4rem;
+    font-size: clamp(12rem, 30vw, 24rem);
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.02);
-    line-height: 1;
-    letter-spacing: -0.05em;
+    color: rgba(255, 255, 255, 0.03);
+    line-height: 0.8;
+    letter-spacing: -0.06em;
     pointer-events: none;
     user-select: none;
+    z-index: 0;
   }
 
   /* ── Skills Ticker ─────────────────────────── */
@@ -267,10 +381,17 @@ const swissCSS = `
     color: #555;
     font-weight: 500;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
   }
 
-  .ticker-dot {
-    color: #fff;
+  .ticker-shape {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    transform: rotate(45deg);
   }
 
   @keyframes ticker {
@@ -301,17 +422,16 @@ const swissCSS = `
   }
 
   .swiss-section-header::after {
-    content: '';
-    position: absolute;
-    bottom: -1.5rem;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background: #fff;
+    display: none;
+  }
+
+  .swiss-section-title-wrap {
+    position: relative;
+    z-index: 2;
   }
 
   .swiss-section-title {
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: -0.03em;
@@ -320,13 +440,24 @@ const swissCSS = `
   }
 
   .swiss-section-number {
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    color: #555;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(8rem, 20vw, 14rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 0.75;
+    color: rgba(255, 255, 255, 0.05);
     position: absolute;
-    top: 0.5rem;
-    right: 0;
+    top: -3rem;
+    left: -1rem;
+    z-index: 0;
+    pointer-events: none;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* When hovered, we can add a slight parallax shift to the number */
+  .swiss-section:hover .swiss-section-number {
+    transform: translateY(-15px) scale(1.02);
+    color: rgba(255, 255, 255, 0.08);
   }
 
   .swiss-section-count {
@@ -348,9 +479,10 @@ const swissCSS = `
     position: relative;
     padding: 1.75rem 2rem;
     background: #000;
+    color: #fff;
     cursor: pointer;
     user-select: none;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease;
     overflow: hidden;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     border-left: 3px solid transparent;
@@ -360,6 +492,7 @@ const swissCSS = `
     border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
 
+  /* Reverted Premium Dark Hover */
   .exp-card:hover {
     background: rgba(255, 255, 255, 0.025);
     border-left-color: rgba(255, 255, 255, 0.5);
@@ -386,16 +519,13 @@ const swissCSS = `
     border: 1px solid rgba(255, 255, 255, 0.08);
     display: grid;
     place-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
   }
 
-  .exp-card:hover .exp-card-logo-wrap {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-  }
-
+  .exp-card:hover .exp-card-logo-wrap,
   .exp-card.is-open .exp-card-logo-wrap {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
   .exp-card-logo {
@@ -462,8 +592,8 @@ const swissCSS = `
     flex-shrink: 0;
     margin-top: 6px;
     color: #444;
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-                color 0.2s ease;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.1s ease;
   }
 
   .exp-card.is-open .exp-card-chevron {
@@ -829,6 +959,11 @@ export default function Home() {
       <style dangerouslySetInnerHTML={{ __html: swissCSS }} />
       <main className="swiss">
         <div className="swiss-container">
+          <div className="swiss-vertical-text">PORTFOLIO SAKHANOV — QA ENGINEER</div>
+
+          {/* Abstract Swiss Grid Coordinates */}
+          <div className="swiss-coord coord-1" aria-hidden="true">X: 001.Y: 001.SYS</div>
+          <div className="swiss-coord coord-2" aria-hidden="true">X: 089.Y: 924.END</div>
 
           {/* ── Hero ──────────────────────────── */}
           <section className="hero">
@@ -836,26 +971,20 @@ export default function Home() {
               <span className="hero-name-first">Ruslan</span>
               <span className="hero-name-last">Sakhanov</span>
             </h1>
-            <p className="hero-role">{portfolio.role}</p>
+            <h2 className="hero-role">
+              QA Engineer
+              <div className="hero-role-line" aria-hidden="true" />
+            </h2>
 
             <div className="hero-divider" />
 
             <div className="hero-meta">
-              <div className="hero-meta-row">
-                <div className="hero-meta-block">
-                  <span className="hero-meta-label">Location</span>
-                  <span className="hero-meta-value">{portfolio.location}</span>
-                </div>
-                <div className="hero-meta-block">
-                  <span className="hero-meta-label">Status</span>
-                  <span className="hero-meta-value"><span className="status-dot" /><strong>Open to opportunities</strong></span>
-                </div>
+              <div className="hero-about-big">
+                {portfolio.intro}
               </div>
-              <div className="hero-meta-block">
-                <span className="hero-meta-label">About</span>
-                <span className="hero-meta-value">
-                  {portfolio.intro}
-                </span>
+              <div className="hero-meta-minimal">
+                <span>■ {portfolio.location}</span>
+                <span><span className="status-dot" style={{ margin: '0 4px 0 0' }} />Open to opportunities</span>
               </div>
             </div>
 
@@ -878,13 +1007,16 @@ export default function Home() {
             </div>
 
             <span className="hero-year" aria-hidden="true">2025</span>
+            <div className="swiss-grid-line" style={{ bottom: 0 }} />
           </section>
 
           {/* ── Experience ────────────────────── */}
-          <section className="swiss-section" id="experience">
+          <section className="swiss-section" id="experience" style={{ paddingTop: '10rem' }}>
             <div className="swiss-section-header">
-              <h2 className="swiss-section-title">Experience</h2>
-              <span className="swiss-section-number">01/</span>
+              <div className="swiss-section-title-wrap">
+                <div className="swiss-section-number" aria-hidden="true">01</div>
+                <h2 className="swiss-section-title">Experience</h2>
+              </div>
               <span className="swiss-section-count">
                 {portfolio.experience.length} roles
               </span>
@@ -903,7 +1035,7 @@ export default function Home() {
                 <div key={i} style={{ display: 'flex', gap: '3rem' }}>
                   {['Playwright', 'Selenium', 'Cypress', 'Postman', 'Jira', 'Python', 'TypeScript', 'SQL', 'REST API', 'CI/CD', 'Git', 'Agile', 'Scrum'].map((skill) => (
                     <span className="ticker-item" key={`${skill}-${i}`}>
-                      <span className="ticker-dot">● </span>{skill}
+                      {skill} <span className="ticker-shape" />
                     </span>
                   ))}
                 </div>
@@ -912,10 +1044,13 @@ export default function Home() {
           </div>
 
           {/* ── Resume ────────────────────────── */}
-          <section className="swiss-section" id="resume">
+          <section className="swiss-section" id="resume" style={{ position: 'relative' }}>
+            <div className="swiss-grid-line" style={{ top: 0 }} />
             <div className="swiss-section-header">
-              <h2 className="swiss-section-title">Resume</h2>
-              <span className="swiss-section-number">02/</span>
+              <div className="swiss-section-title-wrap">
+                <div className="swiss-section-number" aria-hidden="true">02</div>
+                <h2 className="swiss-section-title">Resume</h2>
+              </div>
             </div>
 
             <div style={{ marginBottom: "2.5rem" }}>
@@ -1008,10 +1143,13 @@ export default function Home() {
           </section>
 
           {/* ── Recommendations ────────────────────── */}
-          <section className="swiss-section" id="recommendations">
+          <section className="swiss-section" id="recommendations" style={{ position: 'relative' }}>
+            <div className="swiss-grid-line" style={{ top: 0 }} />
             <div className="swiss-section-header">
-              <h2 className="swiss-section-title">Recommendations</h2>
-              <span className="swiss-section-number">03/</span>
+              <div className="swiss-section-title-wrap">
+                <div className="swiss-section-number" aria-hidden="true">03</div>
+                <h2 className="swiss-section-title">Recommendations</h2>
+              </div>
             </div>
 
             <div className="recommendations-grid">
@@ -1038,7 +1176,8 @@ export default function Home() {
         </div>
 
         {/* ── Footer ──────────────────────────── */}
-        <footer className="swiss-footer swiss-container">
+        <footer className="swiss-footer" style={{ position: 'relative' }}>
+          <div className="swiss-grid-line" style={{ top: 0 }} />
           <span>© {new Date().getFullYear()} Ruslan Sakhanov</span>
           <div className="footer-links">
             {github && (
