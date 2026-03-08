@@ -176,18 +176,18 @@ export const portfolio = {
     ] as ResumeExperienceItem[],
     education: [
       {
-        title: "Tech Orda – iOS & Swift",
-        period: "2023 - 2024",
-        logo: "/logos/techorda.png",
-      },
-      {
         title: "Karaganda State Technical University - BE in Mathematical and Computer Modeling",
         period: "2018 - 2022",
         logo: "/logos/kstu.png",
       },
       {
-        title: "CompTIA Security+",
+        title: "Tech Orda – iOS & Swift",
         period: "2024",
+        logo: "/logos/techorda.png",
+      },
+      {
+        title: "CompTIA Security+",
+        period: "2025",
         logo: "/logos/comptia.png",
       },
     ],

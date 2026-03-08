@@ -156,28 +156,7 @@ const swissCSS = `
     opacity: 1;
   }
 
-  /* ── Scroll Indicator ──────────────────────── */
-
-  .hero-scroll-indicator {
-    position: absolute;
-    bottom: 3rem;
-    left: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    opacity: 0;
-    animation: swissFadeUp 0.6s ease 1s forwards;
-  }
-
-  .hero-scroll-indicator span {
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: #555;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-  }
+  /* ── Removed Scroll Indicator ────────────────── */
 
   .hero-scroll-line {
     width: 1px;
@@ -659,10 +638,10 @@ const swissCSS = `
   /* ── Certifications & Recommendations ────────── */
 
   .cert-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
   }
 
   .cert-card {
@@ -796,10 +775,6 @@ const swissCSS = `
       padding: 3rem 0;
     }
 
-    .hero-scroll-indicator {
-      display: none;
-    }
-
     .hero-year {
       display: none;
     }
@@ -831,7 +806,7 @@ const swissCSS = `
 
   @media (prefers-reduced-motion: reduce) {
     .hero-name, .hero-role, .hero-divider,
-    .hero-meta, .hero-links, .hero-scroll-indicator {
+    .hero-meta, .hero-links {
       opacity: 1 !important;
       transform: none !important;
       animation: none !important;
@@ -900,11 +875,6 @@ export default function Home() {
                   Email ↗
                 </a>
               )}
-            </div>
-
-            <div className="hero-scroll-indicator" aria-hidden="true">
-              <span>↓</span>
-              <div className="hero-scroll-line" />
             </div>
 
             <span className="hero-year" aria-hidden="true">2025</span>
@@ -1018,19 +988,21 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
 
-                <h4 style={{ marginTop: '3rem' }}>Certifications</h4>
-                <div className="cert-grid">
-                  {portfolio.resumeFull.certifications.map((cert) => (
-                    <div className="cert-card" key={cert.title}>
-                      <img src={cert.image} alt={cert.title} className="cert-image" />
-                      <div>
-                        <p className="edu-title">{cert.title}</p>
-                        <p className="edu-period">{cert.issuer} • {cert.date}</p>
-                      </div>
+            <div className="resume-col" style={{ marginTop: '5rem', width: '100%' }}>
+              <h4>Certifications</h4>
+              <div className="cert-grid">
+                {portfolio.resumeFull.certifications.map((cert) => (
+                  <div className="cert-card" key={cert.title}>
+                    <img src={cert.image} alt={cert.title} className="cert-image" />
+                    <div>
+                      <p className="edu-title">{cert.title}</p>
+                      <p className="edu-period">{cert.issuer} • {cert.date}</p>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
