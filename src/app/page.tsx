@@ -14,6 +14,99 @@ const swissCSS = `
     color: #fff;
     min-height: 100svh;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    cursor: none;
+  }
+
+  /* ── Custom Cursor ─────────────────────────── */
+
+  .cursor-dot {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+    mix-blend-mode: difference;
+    opacity: 0;
+  }
+
+  .cursor-dot.visible {
+    opacity: 1;
+  }
+
+  .cursor-dot.hovering {
+    width: 50px;
+    height: 50px;
+    background: #fff;
+  }
+
+  .cursor-ring {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease, border-color 0.4s ease, opacity 0.4s ease;
+    mix-blend-mode: difference;
+    opacity: 0;
+  }
+
+  .cursor-ring.visible {
+    opacity: 1;
+  }
+
+  .cursor-ring.hovering {
+    width: 70px;
+    height: 70px;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* ── Film Grain Noise ──────────────────────── */
+
+  .noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9990;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  /* ── Scroll Reveal ─────────────────────────── */
+
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.85, 0, 0.15, 1),
+                transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+  }
+
+  .reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-on-scroll-title {
+    opacity: 0;
+    transform: translateY(60px) skewY(3deg);
+    transition: opacity 1s cubic-bezier(0.85, 0, 0.15, 1),
+                transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+  }
+
+  .reveal-on-scroll-title.revealed {
+    opacity: 1;
+    transform: translateY(0) skewY(0deg);
   }
 
   .swiss a {
@@ -242,10 +335,11 @@ const swissCSS = `
     letter-spacing: 0.14em;
     font-weight: 500;
     color: #bbb;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    position: relative;
   }
 
   .hero-link:hover {
@@ -339,9 +433,9 @@ const swissCSS = `
   /* ── Skills Ticker ─────────────────────────── */
 
   .swiss-ticker {
-    padding: 1.5rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2.5rem 0;
+    border-top: 2px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12);
     overflow: hidden;
     position: relative;
   }
@@ -352,46 +446,47 @@ const swissCSS = `
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 80px;
+    width: 120px;
     z-index: 2;
     pointer-events: none;
   }
 
   .swiss-ticker::before {
     left: 0;
-    background: linear-gradient(to right, #000, transparent);
+    background: linear-gradient(to right, #000 20%, transparent);
   }
 
   .swiss-ticker::after {
     right: 0;
-    background: linear-gradient(to left, #000, transparent);
+    background: linear-gradient(to left, #000 20%, transparent);
   }
 
   .ticker-track {
     display: flex;
-    gap: 3rem;
+    gap: 2.5rem;
     white-space: nowrap;
-    animation: ticker 30s linear infinite;
+    animation: ticker 18s linear infinite;
   }
 
   .ticker-item {
-    font-size: 0.72rem;
+    font-size: 1.1rem;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #555;
-    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 700;
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    gap: 3rem;
+    gap: 2.5rem;
   }
 
   .ticker-shape {
     display: inline-block;
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     background: #fff;
     transform: rotate(45deg);
+    opacity: 0.4;
   }
 
   @keyframes ticker {
@@ -901,6 +996,9 @@ const swissCSS = `
       padding: 0 1.25rem;
     }
 
+    .swiss { cursor: auto; }
+    .cursor-dot, .cursor-ring { display: none !important; }
+
     .hero {
       padding: 3rem 0;
     }
@@ -932,6 +1030,14 @@ const swissCSS = `
       gap: 1rem;
       text-align: center;
     }
+
+    .swiss-ticker {
+      padding: 1.5rem 0;
+    }
+
+    .ticker-item {
+      font-size: 0.85rem;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -952,18 +1058,102 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
+
+    // ── Custom Cursor ──────────────────────────
+    const dot = document.querySelector('.cursor-dot') as HTMLElement;
+    const ring = document.querySelector('.cursor-ring') as HTMLElement;
+    if (dot && ring) {
+      let mouseX = 0, mouseY = 0;
+      let ringX = 0, ringY = 0;
+
+      const onMouseMove = (e: MouseEvent) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+        dot.classList.add('visible');
+        ring.classList.add('visible');
+      };
+
+      const animate = () => {
+        ringX += (mouseX - ringX) * 0.12;
+        ringY += (mouseY - ringY) * 0.12;
+        ring.style.left = ringX + 'px';
+        ring.style.top = ringY + 'px';
+        requestAnimationFrame(animate);
+      };
+      animate();
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      const interactiveEls = document.querySelectorAll('a, button, .exp-card, .hero-link');
+      interactiveEls.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          dot.classList.add('hovering');
+          ring.classList.add('hovering');
+        });
+        el.addEventListener('mouseleave', () => {
+          dot.classList.remove('hovering');
+          ring.classList.remove('hovering');
+        });
+      });
+    }
+
+    // ── Scroll-Triggered Reveals ────────────────
+    const revealEls = document.querySelectorAll('.reveal-on-scroll, .reveal-on-scroll-title');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── Parallax Section Numbers ────────────────
+    const onScroll = () => {
+      const numbers = document.querySelectorAll('.swiss-section-number') as NodeListOf<HTMLElement>;
+      numbers.forEach(num => {
+        const rect = num.getBoundingClientRect();
+        const speed = 0.08;
+        const offset = (window.innerHeight / 2 - rect.top) * speed;
+        num.style.transform = `translateY(${offset}px)`;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // ── Magnetic Links ──────────────────────────
+    const magneticLinks = document.querySelectorAll('.hero-link') as NodeListOf<HTMLElement>;
+    magneticLinks.forEach(link => {
+      link.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = link.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        link.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      });
+      link.addEventListener('mouseleave', () => {
+        link.style.transform = 'translate(0, 0)';
+      });
+    });
+
+
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: swissCSS }} />
+      <div className="cursor-dot" />
+      <div className="cursor-ring" />
+      <div className="noise-overlay" aria-hidden="true" />
       <main className="swiss">
         <div className="swiss-container">
           <div className="swiss-vertical-text">PORTFOLIO SAKHANOV — QA ENGINEER</div>
 
-          {/* Abstract Swiss Grid Coordinates */}
-          <div className="swiss-coord coord-1" aria-hidden="true">X: 001.Y: 001.SYS</div>
-          <div className="swiss-coord coord-2" aria-hidden="true">X: 089.Y: 924.END</div>
 
           {/* ── Hero ──────────────────────────── */}
           <section className="hero">
@@ -984,7 +1174,7 @@ export default function Home() {
               </div>
               <div className="hero-meta-minimal">
                 <span>■ {portfolio.location}</span>
-                <span><span className="status-dot" style={{ margin: '0 4px 0 0' }} />Open to opportunities</span>
+                <span>■ Open to opportunities</span>
               </div>
             </div>
 
@@ -1006,13 +1196,13 @@ export default function Home() {
               )}
             </div>
 
-            <span className="hero-year" aria-hidden="true">2025</span>
+            <span className="hero-year" aria-hidden="true">2026</span>
             <div className="swiss-grid-line" style={{ bottom: 0 }} />
           </section>
 
           {/* ── Experience ────────────────────── */}
           <section className="swiss-section" id="experience" style={{ paddingTop: '10rem' }}>
-            <div className="swiss-section-header">
+            <div className="swiss-section-header reveal-on-scroll-title">
               <div className="swiss-section-title-wrap">
                 <div className="swiss-section-number" aria-hidden="true">01</div>
                 <h2 className="swiss-section-title">Experience</h2>
@@ -1021,7 +1211,7 @@ export default function Home() {
                 {portfolio.experience.length} roles
               </span>
             </div>
-            <div className="experience-grid">
+            <div className="experience-grid reveal-on-scroll">
               {portfolio.experience.map((exp) => (
                 <ExperienceCard key={`${exp.company}-${exp.period}`} exp={exp} />
               ))}
@@ -1046,7 +1236,7 @@ export default function Home() {
           {/* ── Resume ────────────────────────── */}
           <section className="swiss-section" id="resume" style={{ position: 'relative' }}>
             <div className="swiss-grid-line" style={{ top: 0 }} />
-            <div className="swiss-section-header">
+            <div className="swiss-section-header reveal-on-scroll-title">
               <div className="swiss-section-title-wrap">
                 <div className="swiss-section-number" aria-hidden="true">02</div>
                 <h2 className="swiss-section-title">Resume</h2>
@@ -1084,7 +1274,7 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="resume-grid">
+            <div className="resume-grid reveal-on-scroll">
               <div className="resume-col">
                 <h4>Technical Skills</h4>
                 <ul>
@@ -1126,10 +1316,10 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="resume-col" style={{ marginTop: '5rem', width: '100%' }}>
+            <div className="resume-col reveal-on-scroll" style={{ marginTop: '5rem', width: '100%' }}>
               <h4>Certifications</h4>
               <div className="cert-grid">
-                {portfolio.resumeFull.certifications.map((cert) => (
+                {[...portfolio.resumeFull.certifications].reverse().map((cert) => (
                   <div className="cert-card" key={cert.title}>
                     <img src={cert.image} alt={cert.title} className="cert-image" />
                     <div>
@@ -1145,14 +1335,14 @@ export default function Home() {
           {/* ── Recommendations ────────────────────── */}
           <section className="swiss-section" id="recommendations" style={{ position: 'relative' }}>
             <div className="swiss-grid-line" style={{ top: 0 }} />
-            <div className="swiss-section-header">
+            <div className="swiss-section-header reveal-on-scroll-title">
               <div className="swiss-section-title-wrap">
                 <div className="swiss-section-number" aria-hidden="true">03</div>
                 <h2 className="swiss-section-title">Recommendations</h2>
               </div>
             </div>
 
-            <div className="recommendations-grid">
+            <div className="recommendations-grid reveal-on-scroll">
               {portfolio.resumeFull.recommendations.map((rec, i) => (
                 <div className="rec-card" key={i}>
                   <p className="rec-text">"{rec.text}"</p>
